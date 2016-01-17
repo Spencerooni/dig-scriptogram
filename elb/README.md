@@ -1,3 +1,5 @@
+## slow_elb.pl (Perl5)
+
 slow_elb.pl find slow responses times from AWS ELB logs. 
 
 First of all get some ELB access logs, for example from Publishing ELB and Warden ELB from their S3 buckets for 28th August:
@@ -46,4 +48,49 @@ You can pass the following options to slow_elb.pl:
  -threshold n    n in seconds of time threshold to compare against. Default is 1 sec. 
  -short          Display time and 3 responses times only in results. Default. 
  -verbose        Display whole log statement in results.
+```
+
+## The Perl 6 version
+
+The Perl6 version slow_elb.p6 is identical in functionality though the arguments are different because of the way Perl6 processes command-line arguments. 
+
+```
+WARNING: The Perl6 version is *much* slower to run than the Perl5 or Ruby versions. 
+```
+
+You can run slow_elb.p6 on all the log files you've downloaded to show processing time above 5 secs with:
+
+```
+$ perl6 slow_elb.p6 --threshold=5 *.log | tee warden-28th
+```
+
+You can pass the following options to slow_elb.p6: 
+
+```
+--e1             Compare time of elb internal processing time (sec). Defaults if none specified.
+--e2             Compare time of backend processing time (sec). Defaults if none specified.
+--e3             Compare time of response processing time (sec). Defaults if none specified.
+--threshold=n    n in seconds of time threshold to compare against. Default is 1 sec.
+--verbose        Display whole log statement in results. Default is time and 3 responses times only in results.
+```
+
+## The Ruby version
+
+The Ruby version slow_elb.rb is identical in functionality also but again different in the way you call it because of the way Ruby processes command-line arguments. 
+
+You can run slow_elb.rb on all the log files you've downloaded to show processing time above 5 secs with:
+
+```
+$ ruby slow_elb.rb --threshold=5 *.log | tee warden-28th
+```
+
+You can pass the following options to slow_elb.rb: 
+
+```
+-1, --1                          Compare time of elb internal processing time (sec). Defaults if none specified.
+-2, --2                          Compare time of backend processing time (sec). Defaults if none specified.
+-3, --3                          Compare time of response processing time (sec). Defaults if none specified.
+-t, --threshold n                n in seconds of time threshold to compare against. Default is 1 sec.
+-d, --debug                      Display debug information.
+-v, --verbose                    Display whole log statement in results.
 ```

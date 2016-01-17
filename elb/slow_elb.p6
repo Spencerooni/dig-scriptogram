@@ -59,8 +59,8 @@ sub MAIN (
 sub USAGE (Str $message = "")
 {
     print qq:to/EOF/;
-$*PROGRAM_NAME: $message ($version)
-$*PROGRAM_NAME logfiles
+$*PROGRAM-NAME: $message ($version)
+$*PROGRAM-NAME logfiles
    	--e1             Compare time of elb internal processing time (sec). Defaults if none specified. 
    	--e2             Compare time of backend processing time (sec). Defaults if none specified. 
    	--e3             Compare time of response processing time (sec). Defaults if none specified. 
