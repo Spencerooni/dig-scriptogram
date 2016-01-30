@@ -94,3 +94,24 @@ You can pass the following options to slow_elb.rb:
 -d, --debug                      Display debug information.
 -v, --verbose                    Display whole log statement in results.
 ```
+
+## The Lua version
+
+The Lua version slow_elb.lua is also identical in functionality but different because of the way the Lua module lapp processes the command-line arguments. There is no built-in lua command argument processing so I've used the lapp module which is included in the repo. It will only allow single letter arguments and won't permit numbers. 
+
+You can run slow_elb.lua on your log files with:
+
+```
+$ lua slow_elb.lua --threshold=5 *.log | tee warden-28th
+```
+
+You can pass the following options to slow_elb.lua: 
+
+```
+-u, --e1                         Compare time of elb internal processing time (sec). Defaults if none specified.
+-e, --e2                         Compare time of backend processing time (sec). Defaults if none specified.
+-d, --e3                         Compare time of response processing time (sec). Defaults if none specified.
+-t, --threshold n                n in seconds of time threshold to compare against. Default is 1 sec.
+-d, --debug                      Display debug information.
+-v, --verbose                    Display whole log statement in results.
+```
