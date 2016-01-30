@@ -5,7 +5,7 @@ ParsesELB log files to find slow responses for ELB int processing time, backend 
 
 Download ELB logs from S3 bucket:
 aws s3 sync s3://pub-ext-elb/AWSLogs/719728721003/elasticloadbalancing/eu-west-1/2015/08/28 .
-2015-08-28T08:08:11.042771Z publishing-external-elb-https 92.19.226.7:51331 10.84.10.10:80 0.000023 1.069548 0.00003 200 200 0 3372 "GET https://mot-testing.i-env.net:443/ HTTP/1.1" "Mozilla/5.0 (Linux; Android 4.4.2; V919 3G Air Core8 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.133 Safari/537.36" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2
+2015-08-28T08:08:11.042771Z publishing-external-elb-https 93.15.210.26:26023 11.240.54.67:80 0.000023 1.069548 0.00003 200 200 0 3372 "GET https://mot-testing.i-env.net:443/ HTTP/1.1" "Mozilla/5.0 (Linux; Android 4.4.2; V919 3G Air Core8 Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/44.0.2403.133 Safari/537.36" ECDHE-RSA-AES128-GCM-SHA256 TLSv1.2
 
 PC 15/01/16 ruby version
 PC 12/10/15 perl 6 version
@@ -15,7 +15,7 @@ PC 29/08/15 perl 5 version
 require 'optparse'
 require 'ostruct'
 
-$version = "0.2";
+$version = "0.3";
 $opt_debug = 0;
 
 # process command-line arguments
