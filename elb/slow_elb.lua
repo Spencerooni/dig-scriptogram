@@ -18,10 +18,21 @@ version = "0.3"
 alltheargs = args
 opt_debug = nil
 
+--
+-- Split a string
+-- credit: http://lua-users.org/wiki/SplitJoin
+--
+function string:split (separator)
+    local separator, fields = separator or ",", {}
+    local pattern = string.format("([^%s]+)", separator)
+    self:gsub(pattern, function(c) fields[#fields+1] = c end)
+    return fields
+end
+
 function string:split2 (separator)
     local tokens = {}
     local pattern = string.format("([^%s]+)", separator)
-    local i = 0
+    local i = 1
     for token in self:gmatch(pattern) do
        tokens[i] = token
        i = i + 1
