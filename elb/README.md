@@ -20,7 +20,7 @@ $ perl slow_elb.pl -t 5 *.log | tee warden-28th
 This will output something like below. It will only print the value of the 3 processing time values if it is greater than the threshold. 
 
 ```
-========719728721003_elasticloadbalancing_eu-west-1_publishing-external-elb-https_20150828T0005Z_54.154.130.111_4i6lq586.log=========
+========719728721003_elasticloadbalancing_eu-west-1_publishing-external-elb-https_20150828T0005Z_XX.XXX.XXX.XXX_4i6lq586.log=========
 2015-08-27T23:57:16.890169Z - 54.633297 -
 2015-08-27T23:58:09.425847Z - 2.188004 -
 2015-08-27T23:57:17.066736Z - 54.609933 -
