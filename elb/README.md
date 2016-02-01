@@ -1,6 +1,6 @@
-## slow_elb.pl (Perl5)
+## grep_elb.pl (Perl5)
 
-slow_elb.pl find slow responses times from AWS ELB logs. 
+grep_elb.pl find slow responses times from AWS ELB logs. 
 
 First of all get some ELB access logs, for example from Publishing ELB and Warden ELB from their S3 buckets for 28th August:
 
@@ -11,10 +11,10 @@ $ mkdir warden-elb
 $ aws s3 sync s3://warden-az1/AWSLogs/719728721003/elasticloadbalancing/eu-west-1/2015/08/28 warden-elb
 ```
 
-Then run slow_elb.pl on all the log files you've downloaded to show processing time above 5 secs:
+Then run grep_elb.pl on all the log files you've downloaded to show processing time above 5 secs:
 
 ```
-$ perl slow_elb.pl -t 5 *.log | tee warden-28th
+$ perl grep_elb.pl -t 5 *.log | tee warden-28th
 ```
 
 This will output something like below. It will only print the value of the 3 processing time values if it is greater than the threshold. 
@@ -39,7 +39,7 @@ If you want to step through the results chronologically (since AWS emits many ac
 $ cat warden-28th | grep -v ========= | sort -n > warden-28th-sorted
 ```
 
-You can pass the following options to slow_elb.pl: 
+You can pass the following options to grep_elb.pl: 
 
 ```
  -1              Compare time of elb internal processing time (sec). Defaults if none specified. 
@@ -52,19 +52,19 @@ You can pass the following options to slow_elb.pl:
 
 ## The Perl 6 version
 
-The Perl6 version slow_elb.p6 is identical in functionality though the arguments are different because of the way Perl6 processes command-line arguments. 
+The Perl6 version grep_elb.p6 is identical in functionality though the arguments are different because of the way Perl6 processes command-line arguments. 
 
 ```
 WARNING: The Perl6 version is *much* slower to run than the Perl5 or Ruby versions. 
 ```
 
-You can run slow_elb.p6 on all the log files you've downloaded to show processing time above 5 secs with:
+You can run grep_elb.p6 on all the log files you've downloaded to show processing time above 5 secs with:
 
 ```
-$ perl6 slow_elb.p6 --threshold=5 *.log | tee warden-28th
+$ perl6 grep_elb.p6 --threshold=5 *.log | tee warden-28th
 ```
 
-You can pass the following options to slow_elb.p6: 
+You can pass the following options to grep_elb.p6: 
 
 ```
 --e1             Compare time of elb internal processing time (sec). Defaults if none specified.
@@ -76,15 +76,15 @@ You can pass the following options to slow_elb.p6:
 
 ## The Ruby version
 
-The Ruby version slow_elb.rb is identical in functionality also but again different in the way you call it because of the way Ruby processes command-line arguments. 
+The Ruby version grep_elb.rb is identical in functionality also but again different in the way you call it because of the way Ruby processes command-line arguments. 
 
-You can run slow_elb.rb on all the log files you've downloaded to show processing time above 5 secs with:
+You can run grep_elb.rb on all the log files you've downloaded to show processing time above 5 secs with:
 
 ```
-$ ruby slow_elb.rb --threshold=5 *.log | tee warden-28th
+$ ruby grep_elb.rb --threshold=5 *.log | tee warden-28th
 ```
 
-You can pass the following options to slow_elb.rb: 
+You can pass the following options to grep_elb.rb: 
 
 ```
 -1, --1                          Compare time of elb internal processing time (sec). Defaults if none specified.
@@ -97,15 +97,15 @@ You can pass the following options to slow_elb.rb:
 
 ## The Lua version
 
-The Lua version slow_elb.lua is also identical in functionality but different because of the way the Lua module lapp processes the command-line arguments. There is no built-in lua command argument processing so I've used the lapp module which is included in the repo. It will only allow single letter arguments and won't permit numbers. 
+The Lua version grep_elb.lua is also identical in functionality but different because of the way the Lua module lapp processes the command-line arguments. There is no built-in lua command argument processing so I've used the lapp module which is included in the repo. It will only allow single letter arguments and won't permit numbers. 
 
-You can run slow_elb.lua on your log files with:
+You can run grep_elb.lua on your log files with:
 
 ```
-$ lua slow_elb.lua --threshold=5 *.log | tee warden-28th
+$ lua grep_elb.lua --threshold=5 *.log | tee warden-28th
 ```
 
-You can pass the following options to slow_elb.lua: 
+You can pass the following options to grep_elb.lua: 
 
 ```
 -u, --e1                         Compare time of elb internal processing time (sec). Defaults if none specified.
