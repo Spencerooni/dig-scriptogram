@@ -17,6 +17,7 @@
 
 cli = require ('commander');
 LineByLineReader = require('line-by-line');
+util = require ('util');
 debug = false;
 
 //
@@ -43,7 +44,7 @@ function parseLine (line)
 function parseElblogfile (filename)
 {
 	var reader = new LineByLineReader(filename);
-	console.log("=========" + filename + "=========");
+	console.log("=========%s=========", filename);
 
 	reader.on('line', function (line) {
 		parseLine(line);
@@ -52,7 +53,6 @@ function parseElblogfile (filename)
 	reader.on('error', function (err) {
 		console.log("failed to read line. " + err);
 	})
-
 }
 
 cli
