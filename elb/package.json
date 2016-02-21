@@ -1,0 +1,28 @@
+{
+  "name": "grep_elb",
+  "version": "1.0.0",
+  "description": "A command-line application for grepping performance issues within AWS ELB logfiles. ",
+  "main": "grep_elb.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/KainosSoftwareLtd/dig-scriptogram.git"
+  },
+  "keywords": [
+    "aws"
+  ],
+  "author": "peter campbell",
+  "license": "MIT",
+  "bin": {
+    "grepelb": "./grep_elb.js"
+  },
+  "bugs": {
+    "url": "https://github.com/KainosSoftwareLtd/dig-scriptogram/issues"
+  },
+  "homepage": "https://github.com/KainosSoftwareLtd/dig-scriptogram#readme",
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
+}

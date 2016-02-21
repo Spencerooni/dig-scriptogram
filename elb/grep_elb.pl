@@ -34,7 +34,7 @@ EOF
 {
 	&GetOptions(
 		'short', 
-		'verbose',
+		'verbose',	
 		'threshold=s',
 		'1',
 		'2',
