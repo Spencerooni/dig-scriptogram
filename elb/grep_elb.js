@@ -13,6 +13,9 @@ cli = require ('commander');
 LineByLineReader = require('line-by-line');
 debug = false;
 
+//
+//   Parse an ELB logfile line to identify which of the 3 responses times are slower than the threshold. 
+//
 function parseLine (line)
 {
     var time1 = "-", time2 = "-", time3 = "-";
@@ -28,6 +31,9 @@ function parseLine (line)
     }
 }
 
+//
+//   Read an ELB logfile line-by-line for efficiency and parse for slow response times. 
+//
 function parseElblogfile (filename)
 {
 	var reader = new LineByLineReader(filename);
