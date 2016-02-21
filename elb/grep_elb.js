@@ -16,21 +16,23 @@
 */
 
 cli = require ('commander');
+fs = require ('fs');
 LineByLineReader = require('line-by-line');
 util = require ('util');
 debug = false;
+sequentially = true;
 
 //
-//   Parse an ELB logfile line to identify which of the 3 responses times are slower than the threshold. 
+//   Parse an ELB logfile line-by-line to identify which of the 3 responses times are slower than the threshold. 
 //
 function parseLine (line)
 {
     var time1 = "-", time2 = "-", time3 = "-";
     var items = line.split(' ');
     var date = items[0], elb = items[1], clientip = items[2], referrer = items[3], request_processing_time = items[4], backend_processing_time = items[5], response_processing_time = items[6], elbstatus = items[7], backendstatus = items[8], rbytes = items[9], sbytes = items[10], verb = items[11], url = items[12];
-    if (cli.e1 && (request_processing_time > cli.threshold)) { time1 = request_processing_time; }
-    if (cli.e2 && (backend_processing_time > cli.threshold)) { time2 = backend_processing_time; }
-    if (cli.e3 && (response_processing_time > cli.threshold)) { time3 = response_processing_time; }
+    if (cli.e1 && (parseFloat(request_processing_time) > parseFloat(cli.threshold))) { time1 = request_processing_time; }
+    if (cli.e2 && (parseFloat(backend_processing_time) > parseFloat(cli.threshold))) { time2 = backend_processing_time; }
+    if (cli.e3 && (parseFloat(response_processing_time) > parseFloat(cli.threshold))) { time3 = response_processing_time; }
     if ((time1 != "-") || (time2 != "-") || (time3 != "-"))
     {
         if (cli.verbose) { console.log(line); } 
@@ -39,20 +41,50 @@ function parseLine (line)
 }
 
 //
-//   Read an ELB logfile line-by-line for efficiency and parse for slow response times. 
+//   Read an ELB logfile asynchronously using line-by-line module and parse for slow response times. 
 //
 function parseElblogfile (filename)
 {
 	var reader = new LineByLineReader(filename);
-	console.log("=========%s=========", filename);
+
+	reader.on('open', function() {
+		console.log("=========%s=========", filename);
+	});
 
 	reader.on('line', function (line) {
 		parseLine(line);
-	})
+	});
 
 	reader.on('error', function (err) {
 		console.log("failed to read line. " + err);
-	})
+	});
+}
+
+//
+//   Read an ELB logfile sequentially using line-by-line module for efficiency and parse for slow response times. 
+//
+function parseElblogfileSequential (files, num)
+{
+	if (num.count == num.end) return;
+	if (debug) console.log("len=%s, file=%s", files.length, files[num.count]);
+	var reader = new LineByLineReader(files[num.count]);
+
+	reader.on('open', function() {
+		console.log("=========%s=========", files[num.count]);
+	});
+
+	reader.on('line', function (line) {
+		parseLine(line);
+	});
+
+	reader.on('error', function (err) {
+		console.log("failed to read line. " + err);
+	});
+
+	reader.on('end', function() {
+		num.count++;
+		parseElblogfileSequential(files, num);
+	});
 }
 
 cli
@@ -75,5 +107,10 @@ if (typeof cli.e1 === 'undefined' && typeof cli.e2 === 'undefined' && typeof cli
 for (f = 0; f < cli.args.length-1; f++)
 {
 	if (debug) { console.log(cli.args[f]); }
-	parseElblogfile(cli.args[f]);
+	if (!sequentially) parseElblogfile(cli.args[f]);
+}
+if (sequentially)
+{
+	var num = { count: 0, end: cli.args.length-1 };
+	parseElblogfileSequential(cli.args, num);
 }
