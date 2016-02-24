@@ -115,3 +115,32 @@ You can pass the following options to grep_elb.lua:
 -d, --debug                      Display debug information.
 -v, --verbose                    Display whole log statement in results.
 ```
+
+## The Node.js version
+
+The Node.js version grepelb is also identical in functionality but different because of the way the Node.js package processes the command-line arguments. It also requires a number of modules to be deployed before it can be run. 
+
+To deploy the dependent module and the Node.js package run: 
+
+```
+$ npm commander -g
+$ npm install line-by-line -g
+$ npm install -g
+```
+
+You can run grepelb on your log files with:
+
+```
+$ grepelb -t 5 *.log | tee warden-28th
+```
+
+You can pass the following options to grepelb: 
+
+```
+-e1, --e1                         Compare time of elb internal processing time (sec). Defaults if none specified.
+-e2, --e2                         Compare time of backend processing time (sec). Defaults if none specified.
+-e3, --e3                         Compare time of response processing time (sec). Defaults if none specified.
+-t, --threshold n                n in seconds of time threshold to compare against. Default is 1 sec.
+-s, --short                      Display time and 3 response times only in results. Default.
+-v, --verbose                    Display whole log statement in results.
+```
