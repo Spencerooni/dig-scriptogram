@@ -144,3 +144,32 @@ You can pass the following options to grepelb:
 -s, --short                      Display time and 3 response times only in results. Default.
 -v, --verbose                    Display whole log statement in results.
 ```
+
+## The Go(lang) version
+
+The Go version grep_elb is also identical in functionality but compiled into a native Go executable. To compile, follow the steps
+
+
+```
+$ brew install go
+$ Set your $GOPATH environment variable, i.e. 
+set GOPATH=/Users/davidmcg/Dropbox/Github/gocode/
+$ build using go build grep_elb.go
+```
+
+You can run grep_elb on your log files with:
+
+```
+$ grep_elb -t 5 testdata\*.log | tee warden-28th
+```
+
+You can pass the following options to grepelb: 
+
+```
+-i, Compare time of elb internal processing time (sec). Defaults if none specified.
+-b, Compare time of backend processing time (sec). Defaults if none specified.
+-r, Compare time of response processing time (sec). Defaults if none specified.
+-t,  Time threshold to compare against. Default is 1 sec.
+-d,  Disoplay debug information
+-v,  Display whole log statement in results.
+```
