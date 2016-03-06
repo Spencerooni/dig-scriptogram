@@ -37,7 +37,7 @@ sub MAIN (
 	{
 		my $fh = open "$filename", :r or die "unable to open file $filename";
 		say "=========$filename=========";
-		# v slow in perl 6: for $fh.lines -> $line
+		# slower in perl 6: for $fh.lines -> $line
 		while (defined my $line = $fh.get)
 		{
 			my @time = "-", "-", "-";
