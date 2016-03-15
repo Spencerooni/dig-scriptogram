@@ -4,18 +4,18 @@
 from glob import glob
 import argparse
 
+
 def parse_logs():
     args = get_parser().parse_args()
     t_section = []
     timers = args.req + args.back + args.res
     files = glob(args.path) 
     header = "=========%s========="
-    
+
     for log_file in files:
         with open(log_file, 'r') as f:
             print header % log_file
-            threshold = lambda x: float(x) >= args.t
-            have_greater = lambda section: filter(threshold, section)
+
             for line in f:
                 line_contents = line.split()
                 if timers < 1:
@@ -23,9 +23,10 @@ def parse_logs():
                 else:
                     pack = zip([args.req, args.back, args.res], line_contents[4:7])
                     t_section.extend([p[1] for p in filter(lambda x: x[0], pack)])
-                if have_greater(t_section):
+                if filter(lambda x: float(x) >= args.t, t_section):
                     print (line[:27] + ' ' + ' '.join(t_section), line)[bool(args.v)]
                 t_section = []
+
 
 def get_parser():
     parser = argparse.ArgumentParser(description='Process some logs.')
