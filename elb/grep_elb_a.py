@@ -18,10 +18,11 @@ def parse_logs():
 
             for line in f:
                 line_contents = line.split()
+                static_section = line_contents[4:7]
                 if timers < 1:
-                    t_section = line_contents[4:7]
+                    t_section = static_section
                 else:
-                    pack = zip([args.req, args.back, args.res], line_contents[4:7])
+                    pack = zip([args.req, args.back, args.res], static_section)
                     t_section.extend([p[1] for p in filter(lambda x: x[0], pack)])
                 if filter(lambda x: float(x) >= args.t, t_section):
                     print (line[:27] + ' ' + ' '.join(t_section), line)[bool(args.v)]
