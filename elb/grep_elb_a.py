@@ -6,7 +6,7 @@ import argparse
 
 
 def parse_logs():
-    args = get_parser().parse_args()
+    args = get_arg_parser().parse_args()
     t_section = []
     timers = args.req + args.back + args.res
     files = glob(args.path) 
@@ -28,7 +28,7 @@ def parse_logs():
                 t_section = []
 
 
-def get_parser():
+def get_arg_parser():
     parser = argparse.ArgumentParser(description='Process some logs.')
     parser.add_argument('path', type=str, help='path to log files')
     parser.add_argument('-t', required=True, type=float, help='threshold value')
